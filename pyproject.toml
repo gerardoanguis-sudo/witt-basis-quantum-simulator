@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wittqsim"
+version = "0.1.0"
+description = "Simulación de circuitos cuánticos con base de Witt en álgebra de Clifford"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "clifford",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["wittqsim*"]
