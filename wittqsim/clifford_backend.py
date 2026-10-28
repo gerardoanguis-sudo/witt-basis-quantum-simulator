@@ -28,8 +28,8 @@ class WittRegister:
     - La acción de compuertas se hace por multiplicación izquierda.
 
     Convención de Witt:
-    - f_k  = 1/2 (e_k - i e_{n+k})      aniquilación
-    - fd_k = 1/2 (e_k + i e_{n+k})      creación
+    - f_k  = 1/2 (e_k + i e_{n+k})      aniquilación
+    - fd_k = 1/2 (e_k - i e_{n+k})      creación
     - {f_i, fd_j} = delta_ij, {f_i,f_j}=0, {fd_i,fd_j}=0
     """
 
@@ -63,8 +63,8 @@ class WittRegister:
         self.f = {}
         self.fd = {}
         for k in range(1, n_qubits + 1):
-            self.f[k] = 0.5 * (self.e[k] - self.i * self.e[n_qubits + k])
-            self.fd[k] = 0.5 * (self.e[k] + self.i * self.e[n_qubits + k])
+            self.f[k] = 0.5 * (self.e[k] + self.i * self.e[n_qubits + k])
+            self.fd[k] = 0.5 * (self.e[k] - self.i * self.e[n_qubits + k])
 
         self.I = self._build_vacuum_idempotent()
         self.I_scalar = self.scalar(self.I)
@@ -256,7 +256,9 @@ class WittRegister:
 
     def phase_minus(self, k: int, theta: float):
         """
-        Convención usada en el paper/notebook para T_j(theta)=diag(1, exp(-i theta)).
+        Familia de la tesis: T_k(theta)=diag(1, exp(-i theta)).
+
+        phase_minus(k, pi/2) = Sd(k); phase_minus(k, pi/4) = Td(k).
         """
         return self.phase(k, -theta)
 
@@ -274,7 +276,10 @@ class WittRegister:
 
     def Rz_diag(self, k: int, theta: float):
         """
-        R(theta)=diag(exp(i theta), exp(-i theta)), como en la notación del paper.
+        Diagonal D(theta)=diag(exp(i theta), exp(-i theta)).
+
+        Con R_z(phi)=exp(-i phi Z/2), D(theta)=R_z(-2 theta).
+        Para la rotación R_z(phi) de la tesis, usar Rz_diag(k, -phi/2).
         """
         k = self._check_qubit(k)
         return np.exp(1j * theta) * self.proj0(k) + np.exp(-1j * theta) * self.proj1(k)

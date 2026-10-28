@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wittqsim"
-version = "0.1.0"
+version = "0.1.1"
 description = "Simulación de circuitos cuánticos con base de Witt en álgebra de Clifford"
 requires-python = ">=3.10"
 dependencies = [
